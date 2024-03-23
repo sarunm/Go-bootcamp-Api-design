@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JetClientState">
+    <option name="folders">
+      <list>
+        <folderState>
+          <option name="id" value="520c4b00-8574-4cee-bff2-b117f521ca1c" />
+          <option name="name" value="test" />
+          <option name="requests">
+            <list>
+              <requestState>
+                <option name="id" value="e0d1b3dc-8e56-443c-8cca-8a6b1f89966c" />
+                <option name="method" value="POST" />
+                <option name="name" value="test" />
+                <option name="url" value="http://127.0.0.1:8080" />
+              </requestState>
+            </list>
+          </option>
+          <option name="sortWeight" value="1000000" />
+          <option name="syncProperties">
+            <synchronizationPropertiesState>
+              <option name="folderPath" value="$PROJECT_DIR$/.jetclient" />
+            </synchronizationPropertiesState>
+          </option>
+        </folderState>
+      </list>
+    </option>
+    <option name="id" value="c981fb69-ef1b-417b-8c54-f13ad977803a" />
+  </component>
+</project>
