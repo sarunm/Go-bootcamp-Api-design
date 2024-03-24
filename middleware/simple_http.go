@@ -15,17 +15,29 @@ type Users struct {
 	Age  int    `json:"age"`
 }
 
+type Logger struct {
+	Handler http.Handler
+}
+
 var User = []Users{
 	{ID: 1, Name: "John Doe", Age: 25},
 	//{ID: 2, Name: "Jane Doe", Age: 26},
 }
 
 func main() {
-	http.HandleFunc("/users", logMiddleware(handler))
-	http.HandleFunc("/health", logMiddleware(healthHandler))
+	// multiplexer
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/users", logMiddleware(handler))
+	mux.HandleFunc("/health", logMiddleware(healthHandler))
+
+	srv := http.Server{
+		Addr:    ":8080",
+		Handler: mux,
+	}
 
 	log.Println("server started at :8080")
-	log.Fatal(http.ListenAndServe("localhost:8080", nil))
+	log.Fatal(srv.ListenAndServe())
 	log.Println("server stopped")
 }
 
