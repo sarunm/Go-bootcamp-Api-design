@@ -28,15 +28,24 @@ func (l Logger) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     start := time.Now()
     l.Handler.ServeHTTP(w, r)
     log.Printf("Server http middleware %s %s %s %s", r.RemoteAddr, r.Method, r.URL.Path, time.Since(start))
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> bb0b382e4995ae282871ffb12c64ad71684cc4f1
 }
 
 func main() {
     // multiplexer
     mux := http.NewServeMux()
 
+<<<<<<< HEAD
     mux.HandleFunc("/users", handler)
     mux.HandleFunc("/health", healthHandler)
+=======
+    mux.HandleFunc("/users", logMiddleware(handler))
+    mux.HandleFunc("/health", logMiddleware(healthHandler))
+>>>>>>> bb0b382e4995ae282871ffb12c64ad71684cc4f1
 
     logMux := Logger{Handler: mux}
 
