@@ -54,6 +54,7 @@ func main() {
 
 	g.GET("/users", getUsersFromDB)
 	g.POST("/users", createUserToDbHandler)
+	g.GET("/users/{id}", getUserByIdFromDB)
 	g.GET("/health", healthHandler)
 	e.Start(":8080")
 
@@ -142,6 +143,34 @@ func getUsersFromDB(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, users)
+}
+
+func getUserByIdFromDB(c echo.Context) error {
+	id := c.Param("id")
+	url := "postgres://dxrrvvah:2RyYR4ZuPvwebT8E8q6gS0qMZkJc0PKT@john.db.elephantsql.com/dxrrvvah"
+	db, err := sql.Open("postgres", url)
+	if err != nil {
+		fmt.Println("connect to database error", err)
+	}
+	defer db.Close()
+
+	stmt, err := db.Prepare("SELECT * FROM users where id=$1")
+	if err != nil {
+		fmt.Println("can't prepare query ", err)
+	}
+
+	row := stmt.QueryRow(id)
+	u := Users{}
+	err = row.Scan(&u.ID, &u.Name, &u.Age)
+
+	switch err {
+	case sql.ErrNoRows:
+		return c.JSON(http.StatusNotFound, Err{Message: "Record not found"})
+	case nil:
+		return c.JSON(http.StatusOK, u)
+	default:
+		return c.JSON(http.StatusInternalServerError, Err{Message: err.Error()})
+	}
 }
 
 func healthHandler(c echo.Context) error {
